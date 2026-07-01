@@ -1,0 +1,330 @@
+/* Premium Cyber-Security Vault aesthetics */
+
+body {
+  background-color: var(--ink);
+  background-image: 
+    linear-gradient(rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(79, 172, 254, 0.04) 0%, transparent 50%);
+  background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  color: var(--paper);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CRT Scanlines Overlay */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 22, 28, 0) 50%, 
+    rgba(0, 0, 0, 0.15) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Dossier Card Styling */
+.dossier-card {
+  background-color: var(--paper-dim);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 24px;
+  position: relative;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-premium);
+  backdrop-filter: blur(12px);
+}
+
+.dossier-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--brass);
+  border-left: 2px solid var(--brass);
+  opacity: 0.4;
+  transition: var(--transition-smooth);
+  border-radius: 2px 0 0 0;
+}
+
+.dossier-card:hover {
+  border-color: var(--border-color-active);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 242, 254, 0.15);
+  transform: translateY(-3px);
+}
+
+.dossier-card:hover::before {
+  opacity: 1;
+  width: 20px;
+  height: 20px;
+}
+
+/* Redaction reveal styling */
+.redacted-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.redacted-text {
+  transition: opacity 0.3s ease;
+}
+
+.redaction-bar {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+  background-color: #0d121c;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+/* When parent card is hovered, reveal redacted text */
+.dossier-card:hover .redaction-bar,
+.redacted-wrapper:hover .redaction-bar {
+  transform: scaleX(0);
+}
+
+/* Verdict stamp element */
+.verdict-stamp {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-width: 2px;
+  border-style: solid;
+  display: inline-block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.verdict-stamp.flagged {
+  color: var(--flag);
+  border-color: var(--flag);
+  background-color: rgba(255, 0, 85, 0.05);
+  text-shadow: 0 0 8px var(--flag-glow);
+  box-shadow: 0 0 15px var(--flag-glow);
+}
+
+.verdict-stamp.verified {
+  color: var(--verdict);
+  border-color: var(--verdict);
+  background-color: rgba(0, 255, 135, 0.05);
+  text-shadow: 0 0 8px var(--verdict-glow);
+  box-shadow: 0 0 15px var(--verdict-glow);
+}
+
+/* Folder tab wizard indicator */
+.folder-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 32px;
+  padding-left: 10px;
+}
+
+.folder-tab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--graphite);
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+  transition: var(--transition-smooth);
+  border-radius: 4px 4px 0 0;
+  letter-spacing: 0.05em;
+}
+
+.folder-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: transparent;
+  transition: var(--transition-smooth);
+}
+
+.folder-tab:hover:not(:disabled) {
+  color: var(--brass);
+  background: rgba(0, 242, 254, 0.03);
+}
+
+.folder-tab.active {
+  color: var(--paper);
+  background-color: var(--paper-dim);
+  border-color: var(--border-color);
+  border-bottom: 1px solid var(--paper-dim);
+  font-weight: 700;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.folder-tab.active::before {
+  background-color: var(--brass);
+}
+
+/* Grid alignment and standard containers */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+/* Typography styles */
+.serif-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.mono-data {
+  font-family: var(--font-mono);
+}
+
+/* Slider and Muted Elements */
+input[type="range"] {
+  accent-color: var(--brass);
+  background: var(--graphite-dim);
+  border-radius: 2px;
+  outline: none;
+}
+
+/* Custom dossier button styling */
+.btn-dossier {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 12px 24px;
+  border: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.02);
+  color: var(--paper);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-dossier::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 80%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s ease-out;
+}
+
+.btn-dossier:hover:not(:disabled) {
+  border-color: var(--brass);
+  color: #fff;
+  box-shadow: 0 0 15px var(--brass-glow);
+}
+
+.btn-dossier:hover:not(:disabled)::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-dossier.primary {
+  background-color: var(--brass);
+  color: #020305;
+  border-color: var(--brass);
+  font-weight: 800;
+  box-shadow: 0 4px 15px var(--brass-glow);
+}
+
+.btn-dossier.primary:hover:not(:disabled) {
+  background-color: transparent;
+  color: var(--brass);
+  box-shadow: 0 0 20px var(--brass-glow);
+}
+
+.btn-dossier:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Screen shake slam animation class */
+.shake-element {
+  animation: shake 0.25s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.spinning {
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Interactive elements styles */
+.skill-tag {
+  cursor: pointer;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--brass-glow);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--graphite-dim);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--graphite);
+}
