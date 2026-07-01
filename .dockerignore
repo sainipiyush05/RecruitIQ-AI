@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Virtual Environments
+.venv
+venv
+ENV
+env
+
+# Python cache & compiles
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+cpu_test.log
+
+# Frontend files (since this is a backend-only Dockerfile)
+frontend/
+
+# Large candidate dataset & local precomputed artifacts (ignored by git, kept out of image)
+data/candidates.jsonl
+artifacts/
