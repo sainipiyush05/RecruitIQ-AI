@@ -39,6 +39,7 @@ function App() {
   const [rawUploadedCandidates, setRawUploadedCandidates] = useState([]);
   const [uploadMethod, setUploadMethod] = useState('upload'); // 'upload' | 'local'
   const [localFilePath, setLocalFilePath] = useState('data/candidates.jsonl');
+  const [targetLimit, setTargetLimit] = useState(100);
 
   const jdFileInputRef = useRef(null);
   const candFileInputRef = useRef(null);
@@ -197,7 +198,7 @@ function App() {
     formData.append('file', file);
 
     try {
-      const res = await fetch(`${API_BASE}/api/upload_rank`, {
+      const res = await fetch(`${API_BASE}/api/upload_rank?limit=${targetLimit}`, {
         method: 'POST',
         body: formData
       });
@@ -215,6 +216,7 @@ function App() {
         
         if (data.results && data.results.length > 0) {
           setSelectedCandidate(null);
+          setNumCandidatesToDisplay(targetLimit);
           setActiveStep('results');
         }
       } else {
@@ -241,7 +243,8 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          filepath: localFilePath
+          filepath: localFilePath,
+          limit: targetLimit
         })
       });
       if (res.ok) {
@@ -256,6 +259,7 @@ function App() {
         })));
         if (data.results && data.results.length > 0) {
           setSelectedCandidate(null);
+          setNumCandidatesToDisplay(targetLimit);
           setActiveStep('results');
         }
       } else {
@@ -275,7 +279,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/rank`, {
+      const res = await fetch(`${API_BASE}/api/rank?limit=${targetLimit}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(rawUploadedCandidates)
@@ -515,7 +519,7 @@ function App() {
                 <input 
                   type="range" 
                   min="1" 
-                  max={Math.min(100, candidates.length || 100)} 
+                  max={candidates.length || targetLimit} 
                   step="1"
                   value={numCandidatesToDisplay}
                   className="weight-slider"
@@ -773,9 +777,27 @@ function App() {
               <div style={{ maxWidth: '600px', margin: '0 auto' }}>
                 <FileText size={48} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
                 <h2 style={{ fontSize: '24px', color: 'white', marginBottom: '10px' }}>Select Candidate Database</h2>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '30px' }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '24px' }}>
                   Provide candidate profiles in JSON/JSONL format to rank against your Job Description.
                 </p>
+
+                {/* Retrieve Limit Option */}
+                <div style={{ maxWidth: '320px', margin: '0 auto 24px auto', textAlign: 'left', border: '1px solid var(--border-color)', padding: '16px', borderRadius: '8px', background: 'rgba(255,255,255,0.02)' }}>
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'white', marginBottom: '6px' }}>Number of Candidates to Retrieve</label>
+                  <input 
+                    type="number" 
+                    value={targetLimit} 
+                    min="1"
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      setTargetLimit(isNaN(val) ? 100 : val);
+                    }}
+                    style={{ width: '100%', padding: '8px 12px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-color)', borderRadius: '4px', color: 'white', fontSize: '14px' }}
+                  />
+                  <small style={{ display: 'block', color: 'var(--text-muted)', fontSize: '11px', marginTop: '4px' }}>
+                    Define how many top-ranked candidate profiles to retrieve (e.g. 50, 100, 200, 500, etc.)
+                  </small>
+                </div>
 
                 {/* Selection Tabs */}
                 <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', marginBottom: '24px', gap: '20px', justifyContent: 'center' }}>

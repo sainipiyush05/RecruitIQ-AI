@@ -154,7 +154,7 @@ def recalculate_jd_dependent_features(df_features, candidates, jd_profile):
     return df_features
 
 @app.post("/api/rank")
-def rank_candidates(candidates: List[Dict[str, Any]]):
+def rank_candidates(candidates: List[Dict[str, Any]], limit: int = 100):
     if not candidates:
         raise HTTPException(status_code=400, detail="Candidate list is empty")
         
@@ -272,8 +272,8 @@ def rank_candidates(candidates: List[Dict[str, Any]]):
         # Keep original candidate profiles mapped by id for detailing
         candidates_map = {c["candidate_id"]: c for c in candidates}
         
-        # Only return top 100 candidate matches to prevent browser out-of-memory crashes
-        top_n = min(100, len(df_sorted))
+        # Only return top N candidate matches to prevent browser out-of-memory crashes
+        top_n = min(limit, len(df_sorted))
         df_top = df_sorted.head(top_n)
         
         results = []
@@ -319,7 +319,7 @@ def rank_candidates(candidates: List[Dict[str, Any]]):
         raise HTTPException(status_code=500, detail=f"Ranking pipeline failed: {str(e)}")
 
 @app.post("/api/upload_rank")
-async def upload_and_rank(file: UploadFile = File(...)):
+async def upload_and_rank(file: UploadFile = File(...), limit: int = 100):
     try:
         content = await file.read()
         text = content.decode("utf-8")
@@ -334,7 +334,7 @@ async def upload_and_rank(file: UploadFile = File(...)):
                 if line.strip():
                     candidates.append(json.loads(line))
                     
-        return rank_candidates(candidates)
+        return rank_candidates(candidates, limit=limit)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to process file: {str(e)}")
 
@@ -370,10 +370,12 @@ def rank_local_candidates_endpoint(req: RankLocalRequest):
         if not os.path.isabs(filepath):
             filepath = os.path.join(os.getcwd(), filepath)
             
-        print(f"Loading local candidates from {filepath} (limit: {req.limit})...")
-        candidates = load_local_candidates(filepath, req.limit)
+        print(f"Loading local candidates from {filepath}...")
+        # Load all candidates from local file to search the full pool
+        candidates = load_local_candidates(filepath)
         print(f"Loaded {len(candidates)} candidates. Proceeding to rank...")
-        return rank_candidates(candidates)
+        limit = req.limit if req.limit is not None else 100
+        return rank_candidates(candidates, limit=limit)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Local ranking failed: {str(e)}")
 
