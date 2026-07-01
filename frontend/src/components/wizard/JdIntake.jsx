@@ -130,7 +130,7 @@ export default function JdIntake({ analyzedJd, setAnalyzedJd, onProceed }) {
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
             <Sparkles size={14} />
-            {loading ? 'PARSING PROFILE...' : 'PARSE REQ SPEC'}
+            {loading ? 'PARSING PROFILE...' : 'ANALYSE JOB DESCRIPTION'}
           </button>
         </div>
       </div>
@@ -239,13 +239,13 @@ export default function JdIntake({ analyzedJd, setAnalyzedJd, onProceed }) {
                 onClick={() => setAnalyzedJd(null)}
                 className="btn-dossier"
               >
-                Clear Spec
+                RESET/RE-UPLOAD 
               </button>
               <button 
                 onClick={onProceed}
                 className="btn-dossier primary"
               >
-                Save Spec & Proceed
+                SAVE JD AND PROCEED
               </button>
             </div>
           </div>
