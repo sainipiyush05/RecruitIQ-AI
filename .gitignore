@@ -1,6 +1,8 @@
 # Large Data Files (e.g. 487MB candidate data)
-data/candidates.jsonl
-data/*.jsonl
+# data/candidates.jsonl
+# data/*.jsonl
+
+
 
 # Precomputed artifacts (embeddings, indexes can be >150MB for large pools)
 artifacts/
