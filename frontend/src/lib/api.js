@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://recruitiq-ai-1.onrender.com';
+
 
 export async function fetchConfigs() {
   const res = await fetch(`${API_BASE}/api/configs`);
