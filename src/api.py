@@ -32,7 +32,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {
+        "name": "RecruitIQ AI API",
+        "status": "healthy",
+        "version": "1.0.0",
+        "documentation": "/docs"
+    }
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
+
 CONFIG_DIR = "configs"
+
 
 def get_yaml_path(filename):
     return os.path.join(CONFIG_DIR, filename)
