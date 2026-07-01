@@ -62,14 +62,27 @@ def compute_composite_score(df, weights_config):
     # 6. Trust Score
     trust_score = 1.0 - df["honeypot_risk"]
     
-    # Composite
-    composite = (
-        w.get("technical_fit", 0.30) * technical_fit +
-        w.get("semantic_lexical_fit", 0.15) * semantic_lexical_fit +
-        w.get("career_quality", 0.20) * career_quality +
-        w.get("location_fit", 0.10) * location_fit +
-        w.get("behavioral_readiness", 0.10) * behavioral_readiness +
-        w.get("trust_score", 0.15) * trust_score
+    # Composite (Weighted Sum)
+    w_tech = w.get("technical_fit", 0.30)
+    w_sem = w.get("semantic_lexical_fit", 0.15)
+    w_career = w.get("career_quality", 0.20)
+    w_loc = w.get("location_fit", 0.10)
+    w_beh = w.get("behavioral_readiness", 0.10)
+    w_trust = w.get("trust_score", 0.15)
+    
+    weighted_sum = (
+        w_tech * technical_fit +
+        w_sem * semantic_lexical_fit +
+        w_career * career_quality +
+        w_loc * location_fit +
+        w_beh * behavioral_readiness +
+        w_trust * trust_score
     )
+    
+    # Calculate sum of all weights to normalize score to 1.0 (100% max)
+    total_weight = w_tech + w_sem + w_career + w_loc + w_beh + w_trust
+    
+    # Normalize score by dividing the weighted sum by total weight
+    composite = weighted_sum / max(1e-5, total_weight)
     
     return composite
