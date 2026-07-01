@@ -2,8 +2,6 @@
 # data/candidates.jsonl
 # data/*.jsonl
 
-
-
 # Precomputed artifacts (embeddings, indexes can be >150MB for large pools)
 artifacts/
 
@@ -33,3 +31,9 @@ frontend/dist/
 frontend/dist-ssr/
 frontend/*.local
 frontend/.env*.local
+
+# Agents 
+.agents/
+AGENTS.md
+.agents/AGENTS.md
+.agents/CUSTOM_RULES.md
