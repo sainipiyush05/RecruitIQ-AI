@@ -1,0 +1,36 @@
+ideal_profile_text: '6-8 years total, 4-5 in applied ML/AI at product companies, shipped
+  an end-to-end ranking/search/recommendation system to real users at scale, opinionated
+  about hybrid vs dense retrieval and offline vs online eval, defends choices with
+  reference to real systems built.
+
+  '
+location_preference:
+  acceptable:
+  - Hyderabad
+  - Mumbai
+  - Bangalore
+  - Delhi NCR
+  - Gurgaon
+  ideal:
+  - Pune
+  - Noida
+  outside_india: case_by_case_no_visa
+mandatory_skills:
+- sentence-transformers
+- embeddings
+- vector-db
+- retrieval
+- ranking
+- python
+- evaluation-ndcg-mrr-map
+notice_period_preference:
+  buyout_max_days: 30
+  ideal_max_days: 30
+preferred_skills:
+- lora
+- qlora
+- peft
+- learning-to-rank
+- xgboost
+- distributed-systems
+- open-source

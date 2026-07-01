@@ -1,0 +1,15 @@
+disqualifier_rules:
+  architecture_stale_code:
+    min_months_current: 18
+  langchain_only_recent:
+    max_months_recent: 12
+    threshold_year: 2022
+honeypot_rules:
+  assessment_mismatch:
+    min_score_for_expert: 35
+  exp_sum_mismatch:
+    max_deviation: 0.25
+  expert_no_duration:
+    min_months_for_expert: 6
+  stacked_stuffing:
+    min_triggers: 4

@@ -1,0 +1,33 @@
+# Large Data Files (e.g. 487MB candidate data)
+data/candidates.jsonl
+data/*.jsonl
+
+# Precomputed artifacts (embeddings, indexes can be >150MB for large pools)
+artifacts/
+
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python Cache & Tests
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Log Files
+*.log
+cpu_test.log
+
+# System/OS Files
+.DS_Store
+Thumbs.db
+
+# Frontend (Node modules, builds, etc.)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.env*.local

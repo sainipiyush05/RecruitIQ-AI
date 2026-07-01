@@ -1,0 +1,43 @@
+# Redrob Hackathon — Submission Metadata
+team_name: "RecruitIQ-AI-Team"
+
+primary_contact:
+  name: "Piyush Saini"
+  email: "piyush@example.com"
+  phone: "+91-9999999999"
+
+team_members:
+  - name: "Piyush Saini"
+    email: "piyush@example.com"
+    role: "ML Engineer"
+
+github_repo: "https://github.com/piyushsaini/RecruitIQ-AI"
+sandbox_link: "https://huggingface.co/spaces/piyushsaini/RecruitIQ-AI-Sandbox"
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+compute:
+  platform: "MacBook Pro"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.11.4"
+  os: "macOS"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: true
+  pre_computation_time_minutes: 15
+
+ai_tools_used:
+  - "Gemini"
+
+ai_usage_summary: |
+  Used Gemini for architecture planning, designing candidate ranking features, implementing the honeypot detection rules, and generating explainable reasoning strings. No candidate data was sent to any LLM API during timed ranking.
+
+methodology_summary: |
+  Rule-based candidate ranking engine with explicit honeypot filtering and evidence-based explanation generation. Integrates dense semantic embeddings (BAAI/bge-base-en-v1.5) and lexical retrieval (BM25Okapi) with career features, location matching, and notice period decay. Multiplicative rule triggers down-weight internal profile inconsistencies (honeypots) and JD specific exclusions.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true

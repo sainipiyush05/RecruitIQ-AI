@@ -1,0 +1,43 @@
+seniority_levels:
+  director:
+    - "director"
+    - "vp"
+    - "head"
+    - "manager"
+  lead:
+    - "lead"
+    - "principal"
+    - "staff"
+    - "architect"
+  senior:
+    - "senior"
+    - "sr"
+  junior:
+    - "junior"
+    - "jr"
+    - "associate"
+    - "engineer"
+    - "developer"
+
+functional_categories:
+  ai_ml:
+    - "ml"
+    - "machine learning"
+    - "ai"
+    - "deep learning"
+    - "data scientist"
+    - "data science"
+    - "research scientist"
+  ranking_search:
+    - "search"
+    - "ranking"
+    - "retrieval"
+    - "recommendation"
+    - "recsys"
+  swe:
+    - "software"
+    - "fullstack"
+    - "backend"
+    - "frontend"
+    - "developer"
+    - "engineer"

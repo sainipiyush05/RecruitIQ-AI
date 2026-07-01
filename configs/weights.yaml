@@ -1,0 +1,11 @@
+subweights:
+  semantic_lexical:
+    bm25_score: 0.4
+    embedding_similarity: 0.6
+weights:
+  behavioral_readiness: 0.1
+  career_quality: 0.2
+  location_fit: 0.1
+  semantic_lexical_fit: 0.15
+  technical_fit: 0.7
+  trust_score: 0.15
