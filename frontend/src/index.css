@@ -811,3 +811,228 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
 }
+
+/* Step Wizard Bar */
+.step-wizard-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: var(--transition-smooth);
+}
+
+.step-item.active {
+  opacity: 1;
+}
+
+.step-item.completed {
+  opacity: 0.8;
+  color: var(--secondary);
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.step-item.active .step-num {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.step-item.completed .step-num {
+  background: var(--secondary-glow);
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+.step-txt {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+
+.step-connector {
+  width: 20px;
+  height: 1px;
+  background: var(--border-color);
+}
+
+/* Sidebar step-guide-list */
+.step-guide-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-guide-list li {
+  padding-left: 20px;
+  position: relative;
+}
+
+.step-guide-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-color);
+}
+
+.step-guide-list li.active-guide::before {
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.step-guide-list li.completed-guide::before {
+  background: var(--secondary);
+}
+
+.step-guide-list li.pending-guide::before {
+  background: var(--text-muted);
+}
+
+.step-guide-list li strong {
+  display: block;
+  font-size: 13px;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.step-guide-list li p {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* JD Upload Zone */
+.jd-upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.01);
+  transition: var(--transition-smooth);
+}
+
+.jd-upload-zone:hover, .jd-upload-zone.drag-over {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.02);
+}
+
+.jd-textarea {
+  width: 100%;
+  height: 150px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  transition: var(--transition-smooth);
+  margin-top: 10px;
+}
+
+.jd-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* JD Editor Form */
+.jd-editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--primary);
+}
+
+.form-group small {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Candidates Upload */
+.cand-file-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 12px;
+  background: var(--primary-glow);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  font-size: 12px;
+  color: white;
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
