@@ -196,6 +196,8 @@ pip install -r requirements.txt
 
 # Start the server
 python src/api.py
+OR
+python -m uvicorn src.api:app --reload --port 8000
 ```
 API runs on `http://localhost:8000`.
 

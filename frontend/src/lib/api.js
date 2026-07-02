@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://recruitiq-ai-production-30ab.up.railway.app';
 
 export async function fetchConfigs() {
   const res = await fetch(`${API_BASE}/api/configs`);
