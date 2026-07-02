@@ -14,6 +14,9 @@ class RetrievalSystem:
     def lazy_load_model(self):
         if self.model is None:
             import torch
+            # Limit CPU threads to prevent oversubscription & OOM crash in container environments
+            torch.set_num_threads(1)
+            torch.set_num_interop_threads(1)
             device = "cpu"
             if torch.cuda.is_available():
                 device = "cuda"

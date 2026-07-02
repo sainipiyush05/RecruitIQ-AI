@@ -25,6 +25,6 @@ cpu_test.log
 # Frontend files (since this is a backend-only Dockerfile)
 frontend/
 
-# Large candidate dataset & local precomputed artifacts (ignored by git, kept out of image)
-data/candidates.jsonl
+# Large candidate dataset & local precomputed artifacts (commented out to package in container)
+# data/candidates.jsonl
 artifacts/
