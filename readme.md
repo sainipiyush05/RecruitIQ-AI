@@ -156,10 +156,10 @@ graph TD
 
 We chose lightweight, high-performance, and standard library components to keep the system serverless and robust:
 
-### 2.1 BAAI/bge-base-en-v1.5 (Semantic Retrieval)
-- **Why BGE?**: BGE (Beijing Academy of Artificial Intelligence) is one of the highest-rated open-source embedding models for semantic retrieval. 
-- **Local Execution**: The `SentenceTransformer` library runs BGE locally on CPU (using `mps` acceleration on macOS, or `cpu` on standard sandboxes), eliminating external API calls.
-- **Dimensionality**: Outputs compact 768-dimensional dense vectors, allowing us to store 100,000 vectors in a simple 300MB `candidate_embeddings.npy` file.
+### 2.1 sentence-transformers/all-MiniLM-L6-v2 (Semantic Retrieval)
+- **Why MiniLM?**: The all-MiniLM-L6-v2 model is highly efficient, fast, and requires minimal memory footprint, making it ideal for hosting environments with resource constraints.
+- **Local Execution**: The `SentenceTransformer` library runs the model locally on CPU (using `mps` acceleration on macOS, or `cpu` on standard sandboxes), eliminating external API calls.
+- **Dimensionality**: Outputs compact 384-dimensional dense vectors, keeping memory overhead very low.
 
 ### 2.2 rank-bm25 (Lexical Retrieval)
 - **Why BM25?**: BM25 is the industry-standard algorithm for TF-IDF keyword ranking. It ensures that candidates with exact matches for required technical stacks (e.g. `sentence-transformers`, `peft`) are surfaced, supplementing semantic matching.

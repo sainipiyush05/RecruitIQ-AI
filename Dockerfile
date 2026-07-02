@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Pre-download the SentenceTransformer model during building
 # This guarantees that the model is bundled with the Docker image, avoiding runtime downloads and potential cold-start timeouts
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-base-en-v1.5')"
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
 
 # Copy the rest of the application files
 COPY . .

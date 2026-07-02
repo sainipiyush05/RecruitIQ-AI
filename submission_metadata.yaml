@@ -33,7 +33,7 @@ ai_usage_summary: |
   Used Gemini for architecture planning, designing candidate ranking features, implementing the honeypot detection rules, and generating explainable reasoning strings. No candidate data was sent to any LLM API during timed ranking.
 
 methodology_summary: |
-  Rule-based candidate ranking engine with explicit honeypot filtering and evidence-based explanation generation. Integrates dense semantic embeddings (BAAI/bge-base-en-v1.5) and lexical retrieval (BM25Okapi) with career features, location matching, and notice period decay. Multiplicative rule triggers down-weight internal profile inconsistencies (honeypots) and JD specific exclusions.
+  Rule-based candidate ranking engine with explicit honeypot filtering and evidence-based explanation generation. Integrates dense semantic embeddings (sentence-transformers/all-MiniLM-L6-v2) and lexical retrieval (BM25Okapi) with career features, location matching, and notice period decay. Multiplicative rule triggers down-weight internal profile inconsistencies (honeypots) and JD specific exclusions.
 
 declarations:
   read_submission_spec: true

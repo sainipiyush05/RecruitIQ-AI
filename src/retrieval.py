@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 from rank_bm25 import BM25Okapi
 
 class RetrievalSystem:
-    def __init__(self, model_name="BAAI/bge-base-en-v1.5", cache_dir=None):
+    def __init__(self, model_name="sentence-transformers/all-MiniLM-L6-v2", cache_dir=None):
         self.model_name = model_name
         self.cache_dir = cache_dir
         self.model = None
