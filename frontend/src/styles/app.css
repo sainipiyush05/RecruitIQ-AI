@@ -328,3 +328,227 @@ input[type="range"] {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--graphite);
 }
+
+/* ──────── RESPONSIVE MEDIA QUERIES & UTILITIES ──────── */
+
+/* Global container adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 24px 16px;
+  }
+}
+
+/* 3D cards grid in Hero page */
+.responsive-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  text-align: left;
+  width: 100%;
+  max-width: 840px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Pipeline Flow Styles */
+.pipeline-flow-wrapper {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.pipeline-connector {
+  position: absolute;
+  top: 28px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--border-color);
+  z-index: 1;
+}
+
+.pipeline-connector-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00F2FE, #4FACFE, #00FF87);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1px;
+}
+
+.pipeline-nodes-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 5;
+  padding: 0 5%;
+}
+
+.pipeline-chevron {
+  position: absolute;
+  top: 22px;
+  color: var(--graphite);
+  opacity: 0.5;
+  transition: color 0.3s, opacity 0.3s;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Responsive vertical pipeline flow on mobile/tablet */
+@media (max-width: 768px) {
+  .pipeline-connector {
+    top: 24px;
+    bottom: 24px;
+    left: 50%;
+    right: auto;
+    width: 2px;
+    height: calc(100% - 48px);
+    transform: translateX(-50%);
+  }
+  
+  .pipeline-connector-active {
+    width: 100% !important;
+    height: 0%;
+    background: linear-gradient(180deg, #00F2FE, #4FACFE, #00FF87);
+    transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .pipeline-nodes-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 10px 0;
+  }
+  
+  .pipeline-chevron {
+    display: none;
+  }
+}
+
+/* StepTabs Horizontal Scroll */
+.folder-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 32px;
+  padding-left: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.folder-tabs::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.folder-tab {
+  flex-shrink: 0;
+}
+
+/* Form Grids (2 columns) */
+.form-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .form-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Wizard Dashboard Layout */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Metrics Cards Grid */
+.dashboard-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Visualization Row (Charts Grid) */
+.dashboard-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Candidate Table Horizontal Scroll Containers */
+.table-horizontal-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-inner-min-width {
+  min-width: 850px;
+}
+
+/* Dashboard Toolbar and actions responsiveness */
+.dashboard-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.dashboard-toolbar-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .dashboard-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .dashboard-toolbar-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .dashboard-toolbar-actions > div {
+    width: 100% !important;
+  }
+}
+
+

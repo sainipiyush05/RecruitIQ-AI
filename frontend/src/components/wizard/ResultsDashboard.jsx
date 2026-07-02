@@ -59,7 +59,7 @@ export default function ResultsDashboard({
   configs,
   onWeightChange,
   onResetWeights,
-  onExportCSV,
+  onExportXLSX,
   onSelectCandidate,
   onBackToJd,
   targetLimit,
@@ -189,10 +189,9 @@ export default function ResultsDashboard({
             <span className="mono-data" style={{ fontWeight: 700, fontSize: '13px', color: 'white' }}>
               {cand.candidate_id}
             </span>
-            <div className="redacted-wrapper" style={{ fontSize: '11px', color: 'var(--graphite)', marginTop: '2px', alignSelf: 'flex-start' }}>
-              <span>{cand.profile?.anonymized_name}</span>
-              <motion.div variants={redactionVariants} initial="initial" className="redaction-bar" />
-            </div>
+            <span style={{ fontSize: '11px', color: 'var(--graphite)', marginTop: '2px' }}>
+              {cand.profile?.anonymized_name}
+            </span>
           </div>
 
           {/* Confidence Score */}
@@ -201,9 +200,8 @@ export default function ResultsDashboard({
           </div>
 
           {/* Headline */}
-          <div className="redacted-wrapper" style={{ fontSize: '11px', color: 'var(--paper)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginRight: '16px', alignSelf: 'center' }}>
-            <span>{cand.profile?.current_title || 'Engineer'}</span>
-            <motion.div variants={redactionVariants} initial="initial" className="redaction-bar" />
+          <div style={{ fontSize: '11px', color: 'var(--paper)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginRight: '16px', alignSelf: 'center' }}>
+            {cand.profile?.current_title || 'Engineer'}
           </div>
 
           {/* Top Skills */}
@@ -227,7 +225,7 @@ export default function ResultsDashboard({
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '24px', boxSizing: 'border-box' }}>
+    <div className="dashboard-layout">
       
       {/* Sidebar Controls */}
       <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -298,7 +296,7 @@ export default function ResultsDashboard({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         
         {/* Metrics Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+        <div className="dashboard-metrics-grid">
           <MetricCard label="Registry Size" value={totalCount} icon={<Users size={16} />} colorClass="primary" />
           <MetricCard label="Mean Score" value={`${avgScore}%`} icon={<Percent size={16} />} colorClass="secondary" />
           <MetricCard label="Honeypot Trigger" value={`${honeypotRate}%`} icon={<AlertTriangle size={16} />} colorClass="danger" />
@@ -306,7 +304,7 @@ export default function ResultsDashboard({
         </div>
 
         {/* Visualization Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div className="dashboard-charts-grid">
           <ScoreChart data={scoreIntervals} />
           <NoticeChart data={noticeData} />
         </div>
@@ -315,7 +313,7 @@ export default function ResultsDashboard({
         <div className="dossier-card" style={{ background: 'var(--paper-dim)', display: 'flex', flexDirection: 'column', height: '480px' }}>
           
           {/* Table Toolbar Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
+          <div className="dashboard-toolbar">
             <div>
               <h3 className="serif-title" style={{ fontSize: '18px', color: 'white', margin: 0 }}>
                 Ranked Pipeline Evidence File
@@ -325,7 +323,7 @@ export default function ResultsDashboard({
               </p>
             </div>
             
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <div className="dashboard-toolbar-actions">
               {/* Search Box */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.15)', border: '1px solid var(--border-color)', padding: '6px 12px', width: '220px' }}>
                 <Search size={14} style={{ color: 'var(--graphite)' }} />
@@ -338,58 +336,62 @@ export default function ResultsDashboard({
                 />
               </div>
               
-              {/* CSV Export Button */}
+              {/* XLSX Export Button */}
               <button 
-                onClick={() => onExportCSV(slicedCandidates)} 
+                onClick={() => onExportXLSX(slicedCandidates)} 
                 className="btn-dossier primary"
                 style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px' }}
               >
                 <Download size={14} />
-                EXPORT CSV
+                EXPORT XLSX
               </button>
             </div>
           </div>
-
-          {/* Table header row */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '70px 140px 90px 140px 150px 1fr 40px',
-            padding: '8px 16px',
-            borderBottom: '1px solid var(--border-color)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            color: 'var(--graphite)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            fontWeight: 700
-          }}>
-            <span>Rank</span>
-            <span>Candidate ID</span>
-            <span>Score</span>
-            <span>Designation</span>
-            <span>Top Skills</span>
-            <span>Evidence Summary</span>
-            <span></span>
-          </div>
-
-          {/* Virtualized Candidate List */}
-          <div style={{ flex: 1, width: '100%', height: '100%' }}>
-            {slicedCandidates.length > 0 ? (
-              <VirtualizedList
-                height={350}
-                itemCount={slicedCandidates.length}
-                itemSize={64}
-                width="100%"
-              >
-                {Row}
-              </VirtualizedList>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '60px', color: 'var(--graphite)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
-                NO DOSSIERS MATCHING KEYWORDS FOUND
+          
+          {/* Horizontal Scroll Table Wrapper */}
+          <div className="table-horizontal-scroll">
+            <div className="table-inner-min-width">
+              {/* Table header row */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '70px 140px 90px 140px 150px 1fr 40px',
+                padding: '8px 16px',
+                borderBottom: '1px solid var(--border-color)',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '10px',
+                color: 'var(--graphite)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                fontWeight: 700
+              }}>
+                <span>Rank</span>
+                <span>Candidate ID</span>
+                <span>Score</span>
+                <span>Designation</span>
+                <span>Top Skills</span>
+                <span>Evidence Summary</span>
+                <span></span>
               </div>
-            )}
-          </div>
 
+              {/* Virtualized Candidate List */}
+              <div style={{ flex: 1, width: '100%', height: '100%' }}>
+                {slicedCandidates.length > 0 ? (
+                  <VirtualizedList
+                    height={350}
+                    itemCount={slicedCandidates.length}
+                    itemSize={64}
+                    width="100%"
+                  >
+                    {Row}
+                  </VirtualizedList>
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '60px', color: 'var(--graphite)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
+                    NO DOSSIERS MATCHING KEYWORDS FOUND
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as XLSX from 'xlsx';
 import StepTabs from '../components/shared/StepTabs';
 import JdIntake from '../components/wizard/JdIntake';
 import CandidatePool from '../components/wizard/CandidatePool';
@@ -163,31 +164,22 @@ export default function Wizard({ onBackToLanding }) {
     }
   };
 
-  const handleExportCSV = (listToExport) => {
+  const handleExportXLSX = (listToExport) => {
     const headers = ["Rank", "Candidate ID", "Confidence Score", "Evidence Statement", "Top Skills", "Experience Summary"];
     
-    const rows = listToExport.map(cand => [
-      cand.rank,
-      cand.candidate_id,
-      `${toNum(cand.score * 100).toFixed(1)}%`,
-      `"${cand.reasoning.replace(/"/g, '""').replace(/\n/g, ' ')}"`,
-      `"${getTopSkills(cand, configs?.jd_profile).replace(/"/g, '""')}"`,
-      `"${getExperienceSummary(cand).replace(/"/g, '""')}"`
-    ]);
-    
-    const csvContent = [
-      headers.join(","),
-      ...rows.map(row => row.join(","))
-    ].join("\n");
-    
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", `ranked_evidence_pipeline.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const rows = listToExport.map(cand => ({
+      "Rank": cand.rank,
+      "Candidate ID": cand.candidate_id,
+      "Confidence Score": `${toNum(cand.score * 100).toFixed(1)}%`,
+      "Evidence Statement": cand.reasoning,
+      "Top Skills": getTopSkills(cand, configs?.jd_profile),
+      "Experience Summary": getExperienceSummary(cand)
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows, { header: headers });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Ranked Candidates");
+    XLSX.writeFile(workbook, "ranked_evidence_pipeline.xlsx");
   };
 
   return (
@@ -246,7 +238,7 @@ export default function Wizard({ onBackToLanding }) {
             configs={configs}
             onWeightChange={handleWeightChange}
             onResetWeights={handleResetWeights}
-            onExportCSV={handleExportCSV}
+            onExportXLSX={handleExportXLSX}
             onSelectCandidate={setSelectedCandidate}
             onBackToJd={() => setActiveStep('jd')}
             targetLimit={targetLimit}

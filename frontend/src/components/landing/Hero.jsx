@@ -161,7 +161,7 @@ export default function Hero({ onStart }) {
   };
 
   return (
-    <section style={{ padding: '60px 24px 40px', maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+    <section className="container" style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
       
       {/* Top Badge */}
       <motion.div
@@ -197,7 +197,7 @@ export default function Hero({ onStart }) {
         style={{ 
           fontFamily: 'var(--font-hero)',
           fontWeight: 450,
-          fontSize: 'clamp(42px, 6vw, 76px)', 
+          fontSize: 'clamp(32px, 6vw, 76px)', 
           lineHeight: '1.05', 
           color: 'white', 
           margin: '0 0 20px', 
@@ -255,18 +255,7 @@ export default function Hero({ onStart }) {
       </motion.div>
 
       {/* TWO REDUCED-SIZE BALANCED 3D TILT CARDS */}
-      <div 
-        style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', 
-          gap: '24px', 
-          textAlign: 'left',
-          width: '100%',
-          maxWidth: '840px',
-          margin: '0 auto',
-          boxSizing: 'border-box'
-        }}
-      >
+      <div className="responsive-hero-grid">
         
         {/* CARD 1: Declassification Teaser (Left) */}
         <div

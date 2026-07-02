@@ -163,7 +163,7 @@ export default function JdIntake({ analyzedJd, setAnalyzedJd, onProceed }) {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="form-grid-2col">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <label className="mono-data" style={{ fontSize: '10px', color: 'var(--graphite)', textTransform: 'uppercase' }}>Ideal Cities</label>
                 <input 
@@ -191,7 +191,7 @@ export default function JdIntake({ analyzedJd, setAnalyzedJd, onProceed }) {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="form-grid-2col">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <label className="mono-data" style={{ fontSize: '10px', color: 'var(--graphite)', textTransform: 'uppercase' }}>Notice Period Max (Days)</label>
                 <input 
@@ -234,7 +234,7 @@ export default function JdIntake({ analyzedJd, setAnalyzedJd, onProceed }) {
               />
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '10px', flexWrap: 'wrap' }}>
               <button 
                 onClick={() => setAnalyzedJd(null)}
                 className="btn-dossier"

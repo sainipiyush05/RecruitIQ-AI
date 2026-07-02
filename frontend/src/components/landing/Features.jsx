@@ -88,7 +88,7 @@ const stages = [
 ];
 
 // Animated data packet component
-function DataPacket({ from, to, color, onComplete }) {
+function DataPacket({ from, to, color, onComplete, isMobile }) {
   const [pos, setPos] = useState(0);
 
   useEffect(() => {
@@ -105,6 +105,7 @@ function DataPacket({ from, to, color, onComplete }) {
       setPos(eased);
       
       if (progress < 1) {
+        
         raf = requestAnimationFrame(animate);
       } else {
         onComplete && onComplete();
@@ -118,8 +119,8 @@ function DataPacket({ from, to, color, onComplete }) {
   return (
     <div style={{
       position: 'absolute',
-      left: `${from + (to - from) * pos}%`,
-      top: '50%',
+      left: isMobile ? '50%' : `${from + (to - from) * pos}%`,
+      top: isMobile ? `${from + (to - from) * pos}%` : '50%',
       transform: 'translate(-50%, -50%)',
       width: '10px',
       height: '10px',
@@ -138,6 +139,16 @@ export default function Features() {
   const [packets, setPackets] = useState([]);
   const [completedStages, setCompletedStages] = useState(new Set());
   const terminalRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // When active stage changes, animate terminal lines one by one
   useEffect(() => {
@@ -193,7 +204,7 @@ export default function Features() {
   };
 
   return (
-    <section style={{ padding: '60px 24px 80px', borderTop: '1px solid var(--border-color)', marginTop: '40px' }}>
+    <section className="container" style={{ borderTop: '1px solid var(--border-color)', marginTop: '40px' }}>
       <div style={{ maxWidth: '960px', margin: '0 auto' }}>
         <h2 className="serif-title" style={{ fontSize: '32px', color: 'white', marginBottom: '16px', textAlign: 'center' }}>
           Core Investigative Capabilities
@@ -203,30 +214,18 @@ export default function Features() {
         </p>
 
         {/* ── PIPELINE FLOW DIAGRAM ── */}
-        <div style={{ position: 'relative', marginBottom: '40px' }}>
+        <div className="pipeline-flow-wrapper">
           
           {/* Connection Line (horizontal bar behind the nodes) */}
-          <div style={{
-            position: 'absolute',
-            top: '28px',
-            left: '10%',
-            right: '10%',
-            height: '2px',
-            background: 'var(--border-color)',
-            zIndex: 1
-          }}>
+          <div className="pipeline-connector">
             {/* Glow progress bar fills up to the active stage */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              height: '100%',
-              width: activeStage !== null ? `${(activeStage / (stages.length - 1)) * 100}%` : '0%',
-              background: 'linear-gradient(90deg, #00F2FE, #4FACFE, #00FF87)',
-              boxShadow: '0 0 10px rgba(0, 242, 254, 0.5)',
-              transition: 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-              borderRadius: '1px'
-            }} />
+            <div 
+              className="pipeline-connector-active"
+              style={isMobile 
+                ? { height: activeStage !== null ? `${(activeStage / (stages.length - 1)) * 100}%` : '0%' } 
+                : { width: activeStage !== null ? `${(activeStage / (stages.length - 1)) * 100}%` : '0%' }
+              } 
+            />
 
             {/* Data packets */}
             {packets.map(p => (
@@ -236,18 +235,13 @@ export default function Features() {
                 to={((p.from + 1) / (stages.length - 1)) * 100}
                 color={p.color}
                 onComplete={() => {}}
+                isMobile={isMobile}
               />
             ))}
           </div>
 
           {/* Pipeline Stage Nodes */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            position: 'relative',
-            zIndex: 5,
-            padding: '0 5%'
-          }}>
+          <div className="pipeline-nodes-container">
             {stages.map((stage, idx) => {
               const isActive = activeStage === idx;
               const isCompleted = completedStages.has(idx);
@@ -321,16 +315,13 @@ export default function Features() {
 
                   {/* Chevron connector (between nodes) */}
                   {idx < stages.length - 1 && (
-                    <div style={{
-                      position: 'absolute',
-                      left: `calc(${((idx + 0.5) / (stages.length - 1)) * 90 + 5}%)`,
-                      top: '22px',
-                      color: isCompleted ? stages[idx].color : 'var(--graphite)',
-                      opacity: 0.5,
-                      transition: 'color 0.3s, opacity 0.3s',
-                      zIndex: 6,
-                      pointerEvents: 'none'
-                    }}>
+                    <div 
+                      className="pipeline-chevron"
+                      style={{
+                        left: `calc(${((idx + 0.5) / (stages.length - 1)) * 90 + 5}%)`,
+                        color: isCompleted ? stages[idx].color : 'var(--graphite)',
+                      }}
+                    >
                       <ChevronRight size={14} />
                     </div>
                   )}
